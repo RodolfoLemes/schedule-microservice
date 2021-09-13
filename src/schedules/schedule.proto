@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package schedules;
+
+service SchedulesService {
+  rpc CreateSchedule (ScheduleCreation) returns (Schedule) {}
+  rpc ListSchedule (Empty) returns (ListScheduleResponse) {}
+}
+
+message ScheduleCreation {
+  string title = 2;
+  string description = 3;
+  string eventDate = 4; 
+}
+
+message Schedule {
+  int32 id = 1;
+  string title = 2;
+  string description = 3;
+  string eventDate = 4; 
+}
+
+message ListScheduleResponse {
+  repeated Schedule data = 1;
+}
+
+message Empty {}

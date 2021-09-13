@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  redis:
+    container_name: redis
+    image: redis:4.0.10-alpine
+    ports:
+      - 6379:6379
+
+  rabbitmq:
+    image: rabbitmq:3.9.5-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    volumes:
+      - ./.docker/rabbitmq:/var/lib/rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
