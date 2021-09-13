@@ -3,18 +3,20 @@ syntax = "proto3";
 package schedules;
 
 service SchedulesService {
-  rpc CreateSchedule (ScheduleCreation) returns (Schedule) {}
   rpc ListSchedule (Empty) returns (ListScheduleResponse) {}
+  rpc CreateSchedule (ScheduleCreation) returns (Schedule) {}
+  rpc UpdateSchedule (Schedule) returns (Schedule) {}
+  rpc DeleteSchedule (ScheduleID) returns (Empty) {}
 }
 
 message ScheduleCreation {
-  string title = 2;
-  string description = 3;
-  string eventDate = 4; 
+  string title = 1;
+  string description = 2;
+  string eventDate = 3; 
 }
 
 message Schedule {
-  int32 id = 1;
+  string id = 1;
   string title = 2;
   string description = 3;
   string eventDate = 4; 
@@ -22,6 +24,10 @@ message Schedule {
 
 message ListScheduleResponse {
   repeated Schedule data = 1;
+}
+
+message ScheduleID {
+  string id = 1;
 }
 
 message Empty {}

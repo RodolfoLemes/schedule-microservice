@@ -1,23 +1,19 @@
 import { Module } from '@nestjs/common';
-import { SchedulesController } from './schedules/schedules.controller';
-import { PrismaProvider } from './providers/prisma.provider';
-import { SchedulesService } from './schedules/schedules.service';
 import { BullModule } from '@nestjs/bull';
-import { SchedulesProcessor } from './schedules/schedules.processor';
+import { SchedulesModule } from './schedules/schedules.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     BullModule.forRoot({
-      redis: {
-        host: 'localhost',
-        port: 6379,
-      },
+      redis: process.env.REDIS_URL,
     }),
-    BullModule.registerQueue({
-      name: 'schedule',
-    }),
+    SchedulesModule,
   ],
-  controllers: [SchedulesController],
-  providers: [PrismaProvider, SchedulesService, SchedulesProcessor],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
